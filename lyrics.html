@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dylàn - Lyrics</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Additional styles for lyrics page */
+        main {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            min-height: 100vh;
+        }
+        
+        #lyrics-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #lyrics-hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0,0,0,0.5);
+            animation: slideUp 1s ease-out;
+        }
+
+        #lyrics-hero p {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        .lyrics-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .lyrics-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .song-selector {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid rgba(102, 126, 234, 0.5);
+            padding: 15px 25px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .song-selector::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: left 0.3s ease;
+        }
+        
+        .song-selector:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+            border-color: rgba(102, 126, 234, 0.8);
+        }
+        
+        .song-selector:hover::before {
+            left: 0;
+        }
+        
+        .song-selector {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .song-selector select {
+            background: transparent;
+            border: none;
+            color: #e0e0e0;
+            font-size: 1.2rem;
+            outline: none;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 40px;
+            background: transparent;
+            border: none;
+        }
+        
+        .song-selector::after {
+            content: '▼';
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 0.8rem;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .song-selector:hover::after {
+            color: #764ba2;
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        .song-selector select:focus {
+            outline: none;
+        }
+        
+        .song-selector select option {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 10px;
+            margin: 2px 5px;
+            transition: all 0.2s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+        }
+        
+        .song-selector select option:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3));
+            color: #ffffff;
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .song-selector select option:focus {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.5);
+        }
+        
+        .random-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .random-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #764ba2, #667eea);
+        }
+        
+        .lyrics-display {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            min-height: 500px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .lyrics-display h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .lyrics-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            text-align: center;
+            white-space: pre-line;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .lyrics-placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+            font-size: 1.2rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .album-badge {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .song-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .song-item {
+            background: rgba(26, 26, 26, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .song-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+        
+        .song-item h3 {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .song-item p {
+            color: #667eea;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @media (max-width: 768px) {
+            #lyrics-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .lyrics-container {
+                padding: 40px 15px;
+            }
+            
+            .lyrics-display {
+                padding: 25px;
+            }
+            
+            .lyrics-text {
+                font-size: 1rem;
+            }
+            
+            .song-selector {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .song-selector select {
+                width: 100%;
+                font-size: 1rem;
+            }
+            
+            .lyrics-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Dylàn</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html#music">Music</a></li>
+                    <li><a href="lyrics.html">Lyrics</a></li>
+                    <li><a href="index.html#merch">Merch</a></li>
+                    <li><a href="index.html#about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="lyrics-hero">
+            <div class="container">
+                <h1>Lyrics</h1>
+                <p>Explore the stories behind the songs</p>
+            </div>
+        </section>
+
+    <div class="lyrics-container">
+        <div class="lyrics-controls">
+            <div class="song-selector">
+                <label for="songSelect">Select Song:</label>
+                <select id="songSelect">
+                    <option value="">Choose a song...</option>
+                    <option value="false-lies">False Lies</option>
+                    <option value="ophiuchus">Ophiuchus</option>
+                    <option value="you-chose-him">You Chose Him</option>
+                    <option value="is-it-true">Is It True</option>
+                    <option value="back-to-you">Back To You</option>
+                    <option value="washed-apart">Washed Apart</option>
+                    <option value="plus-one">Plus One</option>
+                    <option value="true-lovers">True Lovers Don't Lie</option>
+                    <option value="bubble">Bubble</option>
+                    <option value="invisible">Invisible</option>
+                    <option value="never-felt-the-same">Never Felt The Same</option>
+                </select>
+            </div>
+            <button class="random-btn" onclick="playRandomSong()">Random Song</button>
+        </div>
+
+        <div class="lyrics-display">
+            <span class="lyrics-placeholder">Select a song to view its lyrics...</span>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Dylàn. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://go.dylanshoobridge.com/discord" target="_blank">Discord</a>
+                <a href="https://whatsapp.com/channel/0029VbAiY4e9MF91sJVrzm14" target="_blank">Whatsapp</a>
+                <a href="https://www.tiktok.com/@dylansh2025" target="_blank">Tiktok</a> 
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lyrics data for Auburn album
+        const lyricsData = {
+            "false-lies": {
+                title: "False Lies",
+                album: "Auburn",
+                lyrics: `You said you'd never walk away
+Said your heart was mine to keep
+But every promise you would make
+Felt hollow when I'd try to sleep
+Your words were sugar on my tongue
+But poison underneath the truth
+I held on tight, I stayed too long
+Believing every line from you
+
+I tried to read between the lines
+But all I saw were painted skies
+I built a home inside your words
+Just to watch it burn alive
+
+False lies, wrapped in pretty sounds
+You held me up, then let me down
+I trusted you with open eyes
+Still fell for all your false lies
+Cold truths hiding in disguise
+You said forever, meant goodbye
+Now I'm the one who's learned to rise
+From the wreckage of your false lies
+
+You played the part, you wore the smile
+Like honesty was just a game
+Every "soon" took quite a while
+Every tear spelled out your name
+I traced the cracks along your voice
+Heard the doubt you tried to hide
+But I ignored my better choice
+'Cause love can make you colorblind
+
+I tried to hold what wasn't real
+I tried to fix what you wouldn't feel
+I gave you truth, you gave me signs
+That nothing here was ever mine
+
+False lies, wrapped in pretty sounds
+You held me up, then let me down
+I trusted you with open eyes
+Still fell for all your false lies
+Cold truths hiding in disguise
+You said forever, meant goodbye
+Now I'm the one who's learned to rise
+From the wreckage of your false lies
+
+Maybe I was chasing smoke
+Maybe you were mirrors and ghosts
+But every cut you left behind
+Taught me how to draw the line
+
+No more echoes in my head
+No more tears for words you said
+I'm done believing half-alibis
+I'm done living your false lies
+
+False lies, I see them clear now
+Every promise breaking down
+You don't own my heart or time
+I'm free from all your false lies
+Real strength comes from goodbye
+I found my truth on the other side
+I won't fall, I won't apologize
+For walking out on your false lies
+You can keep your pretty disguise
+I'm done surviving false lies`
+            },
+            "ophiuchus": {
+                title: "Ophiuchus",
+                album: "Auburn",
+                lyrics: `You read the stars like scripture,
+Said our fate was written there.
+But every time I reach your future,
+You pretend I'm not even there.
+You talk in constellations,
+Counting signs that don't include my name.
+You say I'm hard to figure,
+But baby, you're the one to blame.
+
+You act like love's a horoscope,
+But I can see right through the smoke.
+
+You give me half your heart, then say it's enough,
+Like I'm the thirteenth sign you never trust.
+I'm right here burning in your sky for you 
+Don't treat me like I'm Ophiuchus.
+
+You chase the fire of Sagittarius,
+Then drown in Pisces tears.
+But when it comes to something serious,
+You disappear for years.
+I'm tired of being your mystery,
+The one you never want to claim.
+You say the stars decide our history,
+But baby, you wrote this pain.
+
+I'm not the shadow of your chart,
+I'm the one who loved you from the start.
+
+You give me half your heart, then say it's enough,
+Like I'm the thirteenth sign you never trust.
+I'm right here burning in your sky for you 
+Don't treat me like I'm Ophiuchus.
+
+Maybe I was born between the lines,
+Never meant to fit your grand design.
+But if the stars forgot my name,
+It doesn't mean I'll fade away.
+
+You give me half your heart, then say it's enough,
+Like I'm the thirteenth sign you never trust.
+I'm right here shining, I'm proof of truth 
+Don't treat me like I'm Ophiuchus.
+
+I'm not the one you overlook,
+Don't treat me like I'm Ophiuchus.`
+            },
+            "you-chose-him": {
+                title: "You Chose Him",
+                album: "Auburn",
+                lyrics: `My heart explodes, but not in a good way,
+I saw your hand in his today.
+Every word you said replays,
+Like a ghost that won't fade away.
+We were thunder before the rain,
+Now I'm drowning in the pain,
+You said love would never break
+Guess promises still can.
+
+I gave you every part of me,
+But love doesn't beg, it sets you free.
+I stood there watching you let go,
+Trying to smile, pretending to know
+That maybe someday it'd make sense,
+But it still hurts like it did back then.
+
+You chose him, and I can't change it,
+No rewind, no explanation.
+All those dreams we painted bright,
+You tore 'em down with one goodbye.
+I hope he loves you like I did,
+Even if it breaks me within
+You chose him.
+
+I still drive by your street,
+Like the past's got GPS,
+I replay what you told me,
+When you said you "needed rest."
+Funny how rest means someone else,
+While I can't get any sleep,
+I hope you find your heaven,
+Even if it's not with me.
+
+Guess love's a risk, a coin that flips,
+And I just lost my final wish.
+You found your light, I lost my flame,
+Two hearts, but never the same.
+I still whisper your name in vain,
+But echoes fade, and so does pain.
+
+You chose him, and I can't change it,
+No rewind, no explanation.
+All those dreams we painted bright,
+You tore 'em down with one goodbye.
+I hope he loves you like I did,
+Even if it breaks me within
+You chose him.
+
+Maybe one day you'll remember,
+The way I said your name,
+But I'll be gone like summer,
+And you'll still call his name.
+
+You chose him, and I won't chase it,
+My heart's bruised, but I'll still face it.
+All that's left is truth and pain,
+You moved on, I'll do the same.
+I hope he holds you like I did,
+Even if it burns again
+You chose him.
+Yeah... you chose him.
+And I let you.`
+            },
+            "is-it-true": {
+                title: "Is It True",
+                album: "Auburn",
+                lyrics: `You said her name like it was nothing,
+Just a joke between the guys,
+But my stomach hit the pavement,
+When I saw that look in your eyes.
+You said, "Do you think I could get with her?"
+Like it wasn't twisting the knife,
+You don't even know, she's been
+Running laps inside my mind.
+
+I tried to laugh, play it cool,
+Pretend I don't care what you do,
+But now I can't sleep, can't breathe 
+Just need the damn truth.
+
+Is it true?
+Did you say it just to mess with my head?
+Is it true?
+Are you talking to her when I'm gone to bed?
+'Cause I swear if you're lying,
+I don't know what I'll do 
+But I can't stop asking,
+Is it true?
+
+Now her name hits different when I hear it,
+In the hallway, in your texts,
+And I keep checking her story,
+Like I'm waiting for the wreck.
+You said maybe she's into you now,
+And laughed like it's some game,
+But I'm losing my mind here,
+And you don't feel the same.
+
+I tried to chill, keep my cool,
+But I'm burning through the rules,
+Man, this just ain't fair 
+What the hell am I supposed to do?
+
+Is it true?
+Did you say it to mess with my head?
+Is it true?
+Are you talking to her when I'm gone to bed?
+'Cause I swear if you're lying,
+I don't know what I'll do 
+But I can't stop asking,
+Is it true?
+
+I know she's not mine, never was,
+But damn, it still feels like a loss.
+And you, you should've known,
+That she's the one I talk about when we're alone.
+
+Is it true?
+Did you really go and cross that line?
+Is it true?
+Or am I just losing my mind?
+If you got her, then own it —
+Don't make me look like a fool.
+Just say it straight,
+Yeah, tell me,
+Is it true?
+Is it true...
+'Cause I still think she's too good for you.`
+            },
+            "back-to-you": {
+                title: "Back To You",
+                album: "Auburn",
+                lyrics: `We were lightning in the summer rain
+Burned too bright, then came the pain
+Silent nights, your name on my phone
+Felt so close, now I sleep alone
+
+I told myself I'd be okay
+But your ghost still haunts my days
+Every street and every song
+Feels like where we both went wrong
+
+You left a crack in my heart
+But I still see you in the dark
+Tried to move on, but I can't lie
+I'd still run to you every time
+Even when the sky turns blue
+I'm still lost without you
+
+Your hoodie's still on my chair
+Like you're somehow still halfway there
+Friends say time will do its part
+But time don't know my heart
+
+They say love comes, then it fades
+But ours just bent, it never breaks
+And I still hear your voice
+In every quiet choice I make
+
+You left a crack in my heart
+But I still see you in the dark
+Tried to move on, but I can't lie
+I'd still run to you every time
+Even when the sky turns blue
+I'm still lost without you
+
+I almost let you slip away
+Almost let the hurt outweigh
+But then your hand found mine again
+And I swore I'd never let it end
+
+You left a crack in my heart
+But love still found its way through the dark
+Tried to move on, but we both knew
+My soul was always tied to you
+Now even storms can't pull us through
+'Cause I found my way
+Back to you`
+            },
+            "washed-apart": {
+                title: "Washed Apart",
+                album: "Auburn",
+                lyrics: `I still trace your shadow on the side of my bed
+Where the laughter lived, now the silence sits instead
+We were building futures in the palms of our hands
+Now I walk those dreams alone, trying to understand
+
+How did closeness turn to distance overnight?
+How did holding on start feeling like a fight?
+
+I love you, but I can't stay
+When every word we speak is slipping further away
+We were oceans once, overflowing in the dark
+Now look at us... completely washed apart
+I love you but loving you is tearing me in two
+So I'll go, even though every part of me
+Still runs back to you
+
+We were almost perfect, almost finally right
+But the "almost" always turned into another night
+Where we talked in circles, never really heard
+Holding back the truth, swallowing every single word
+
+How did comfort turn to walking on a wire?
+How did all that warmth turn into quiet fire?
+
+I love you, but I can't stay
+When every word we speak is slipping further away
+We were oceans once, overflowing in the dark
+Now look at us... completely washed apart
+I love you but loving you is tearing me in two
+So I'll go, even though every part of me
+Still runs back to you
+
+I never wanted distance
+I never wanted goodbye
+But I can't be the only heart
+Still willing to try
+Tell me...
+Do you remember how it felt
+When we were us?
+'Cause I do... every day
+
+Wish I could hold you
+Without breaking
+Wish we could fix us
+Without faking
+But love shouldn't feel
+Like losing myself
+I love you, but I can't stay
+Baby, keeping us alive shouldn't cost me everything
+We were oceans once, overflowing in the dark
+Now look at us... completely washed apart
+I love you but loving you is tearing me in two
+So I'll go...
+But God, I hope one day you'll know
+I never stopped loving you
+
+We were side-by-side
+Now we're worlds apart
+But a piece of me
+Still lives where you are`
+            },
+            "plus-one": {
+                title: "Plus One",
+                album: "Auburn",
+                lyrics: `They said you and I were something last July
+Funny, I was busy being out of town that night
+Didn't even know your name, but now it's on my tongue
+'Cause every friend I meet says, "Oh, that's the one"
+
+It's strange how stories grow
+From whispers in the smoke
+To headlines in our small-town minds
+And I'm the joke
+
+I never kissed you, never touched your hand
+But somehow I'm your biggest fan
+In someone else's version of my life
+You're my plus one, I'm your alibi
+And I can't tell if I should laugh or cry
+Over someone I never met in my life
+
+Now when I walk in, I can feel the eyes
+Like we had a past that I've been trying to hide
+I wish I knew the script they're writing me into
+Maybe I'd play the part the way they want me to
+
+It's wild how words can bend
+And still sound like the truth
+I almost started doubting me
+Just to prove it to you
+I never kissed you, never touched your hand
+But somehow I'm your biggest fan
+In someone else's version of my life
+You're my plus one, I'm your alibi
+And I can't tell if I should laugh or cry
+Over someone I never met in my life
+
+If lies are free, then I've been bought and sold
+Got my name in stories I've never told
+They can dance in the dark with what they've done
+But I'm not the one, no, I'm not the one
+
+I never kissed you, never touched your hand
+But somehow I'm your biggest fan
+And in their world, I'm someone else's crime
+You're my plus one, I'm your made-up line
+And I can't tell if I should laugh or cry
+Over someone I never met in my life`
+            },
+            "true-lovers": {
+                title: "True Lovers Don't Lie",
+                album: "Auburn",
+                lyrics: `You said forever under neon skies,
+Hands on my heart, but your eyes told lies.
+Promises fade in the cold moonlight,
+Guess I was blinded, thought wrong was right.
+
+Every word was painted gold,
+Till the truth came out, and the colors broke.
+
+True lovers don't lie,
+They don't say goodbye in disguise.
+They don't hide behind tears they've rehearsed,
+They don't break your heart with a smile that hurts.
+True lovers don't lie 
+So why did you?
+
+You called it love, but it felt like fear,
+I kept on fighting just to keep you near.
+All of your stories, paper-thin,
+Guess I should've known where the cracks begin.
+
+You can't fake fire with a spark that dies,
+You can't build dreams on alibis.
+
+True lovers don't lie,
+They don't say goodbye in disguise.
+They don't hide behind tears they've rehearsed,
+They don't break your heart with a smile that hurts.
+True lovers don't lie 
+So why did you?
+
+Maybe love was real for a little while,
+Maybe truth got lost in your crooked smile.
+But I'm done pretending we're fine tonight,
+'Cause I know what's real 
+True lovers don't lie.
+
+True lovers don't lie,
+They don't watch love slowly die.
+They hold on, they fight, they try 
+Yeah, true lovers don't lie.`
+            },
+            "bubble": {
+                title: "Bubble",
+                album: "Auburn",
+                lyrics: `I used to think love was something I missed
+Like a train I waved at through the mist
+I wore a smile that wasn't mine
+Stayed too long just to feel aligned
+I tried to bend, I tried to stay
+Tried to make forever out of days
+But every time I let someone close
+I felt myself start to decompose
+
+I kept confusing noise for truth
+Thought being chosen meant I'd choose me too
+
+I'm learning how to breathe again
+With nothing tied around my chest
+No promises I can't defend
+No fear of being second best
+I'm not lonely, I'm just honest
+With the way my heart runs
+I'm learning how to love my life
+In this bubble made for one
+
+I watched my friends build homes in pairs
+Fold their names into shared prayers
+I tried to picture myself there
+But I never fully appeared
+I love too deep, I drift too far
+I need whole nights to fall apart
+And every time I almost stay
+My soul keeps asking me to walk away
+
+Maybe love was never late
+Maybe it just wasn't meant to look that way
+
+I'm learning how to stand alone
+Without turning cold or numb
+I don't need a hand to hold
+To know where I'm from
+I'm not lonely, I'm just listening
+To who I've become
+I'm learning how to love my life
+In this bubble made for one
+
+If love comes knocking, I won't lie
+I'll open up, I just won't hide
+Behind the fear of being one
+Or trade my peace for almost love
+I won't shrink to be adored
+I won't bleed to be wanted more
+
+I'm learning how to trust myself
+Without needing someone else
+No waiting rooms inside my head
+No half-lived wishes on a shelf
+I'm not lonely, I'm just choosing
+What my heart's always done
+I'm learning how to love my life
+In this bubble made for one
+
+Maybe one day I'll let someone in
+But tonight, I let myself win`
+            },
+            "invisible": {
+                title: "Invisible",
+                album: "Auburn",
+                lyrics: `I walk through the crowd like a whisper,
+No one turns, no one asks why.
+I laugh at the right time,
+But it's empty behind my eyes.
+I scream in a room full of people,
+But the silence always wins.
+They say they see me,
+But I don't think they've ever really looked in.
+
+I'm a shadow on your brightest day,
+A ghost behind your smile.
+You never ask if I'm okay 
+You haven't in a while.
+
+I'm invisible, like I was never born,
+Like I'm fading more with every morn.
+I'm right here, breathing, can't you see?
+Or is it easier pretending I'm not me?
+I'm invisible…
+
+I hold the weight of a thousand nights,
+But you never feel the strain.
+I laugh so you don't have to ask,
+But I'm drowning in the rain.
+I light your way, but I burn inside,
+Just to make you feel warm.
+Would you notice if I disappeared?
+Would you care at all?
+
+I'm a song you never learned to sing,
+A page you never read.
+I'm here, I swear, I've always been,
+Just lost inside my head.
+
+I'm invisible, like a secret never told,
+Like a story that's grown too old.
+I'm right here, screaming silently,
+But it's easier pretending you don't see.
+I'm invisible…
+
+Maybe one day, I'll make a sound
+Loud enough to shake the ground.
+And maybe then, just maybe then,
+You'll turn around…
+
+But I'm invisible, like a tear in the sea,
+Like a voice that's lost its key.
+Still hoping someone might believe,
+There's more to me than what they see.
+I'm invisible…`
+            },
+            "never-felt-the-same": {
+                title: "Never Felt The Same",
+                album: "Auburn",
+                lyrics: `I heard you're doing fine, a brand new start
+He's got your laugh, but not your heart
+I moved away, found peace somehow
+But silence hurts more than I allow
+
+I thought I'd be the one you'd miss
+But time has a way of stealing bliss
+
+I'll never find a love like ours
+The quiet nights, the falling stars
+I don't wish you pain, or blame the past
+Some things just aren't meant to last
+But even now, I say your name
+And nothing ever feels the same
+
+You built a world I wasn't in
+But I still trace it on my skin
+I smile like I've made peace with it
+But every joke still feels half-lit
+
+You were the echo in my song
+But echoes fade when time moves on
+
+I'll never find a love like ours
+The quiet nights, the falling stars
+I don't wish you pain, or blame the past
+Some things just aren't meant to last
+But even now, I say your name
+And nothing ever feels the same
+
+I won't come back, I won't pretend
+But I still wonder now and then
+If you remember Sunday rain
+Or how we danced through all that pain
+
+I'll never find a love like ours
+But I'm okay with all these scars
+I don't regret, I don't hold tight
+I dream of you some quiet nights
+And even now, I say your name
+And nothing ever feels the same`
+            }
+        };
+
+        // Function to display lyrics
+        function displayLyrics(songKey) {
+            const lyricsDisplay = document.querySelector('.lyrics-display');
+            const song = lyricsData[songKey];
+            
+            if (song) {
+                lyricsDisplay.innerHTML = `
+                    <div style="text-align: center;">
+                        <span class="album-badge">${song.album}</span>
+                        <h2>${song.title}</h2>
+                    </div>
+                    <div class="lyrics-text">${song.lyrics}</div>
+                `;
+            } else {
+                lyricsDisplay.innerHTML = `
+                    <span class="lyrics-placeholder">Select a song to view its lyrics...</span>
+                `;
+            }
+        }
+
+        // Function to play a random song
+        function playRandomSong() {
+            const songKeys = Object.keys(lyricsData);
+            const randomKey = songKeys[Math.floor(Math.random() * songKeys.length)];
+            
+            // Update the select dropdown
+            document.getElementById('songSelect').value = randomKey;
+            
+            // Display the lyrics
+            displayLyrics(randomKey);
+        }
+
+        // Event listener for song selection
+        document.getElementById('songSelect').addEventListener('change', function() {
+            displayLyrics(this.value);
+        });
+
+        // Function to select song from grid
+        function selectSong(songKey) {
+            document.getElementById('songSelect').value = songKey;
+            displayLyrics(songKey);
+        }
+
+        // Initialize with a random song on page load
+        window.onload = function() {
+            playRandomSong();
+        };
+    </script>
+</body>
+</html>
