@@ -344,6 +344,10 @@
                     <option value="bubble">Bubble</option>
                     <option value="invisible">Invisible</option>
                     <option value="never-felt-the-same">Never Felt The Same</option>
+                    <option value="flicker">Flicker</option>
+                    <option value="the-unseen">The Unseen</option>
+                    <option value="whispers-of-a-heart">Whispers Of A Heart</option>
+                    <option value="the-lighthouse-doesnt-turn">The Lighthouse Doesn't Turn</option>
                 </select>
             </div>
             <button class="random-btn" onclick="playRandomSong()">Random Song</button>
@@ -367,8 +371,195 @@
     </footer>
 
     <script>
-        // Lyrics data for Auburn album
+        // Lyrics data for Auburn album and Single
         const lyricsData = {
+            "flicker": {
+                title: "Flicker",
+                album: "Single",
+                lyrics: `You used to light up every room,
+Now shadows linger in the gloom.
+Your laughter's echo fades away,
+A silent void where joy would stay.
+
+I reach for you, but you're not there,
+Just empty space and vacant air.
+The warmth we had has turned to chill,
+A love once vibrant, now so still.
+
+Your eyes once sparkled, now they're dim,
+A distant look, a fading hymn.
+Conversations turn to sighs,
+As silence grows between our ties.
+
+I reach for you, but you're not there,
+Just empty space and vacant air.
+The warmth we had has turned to chill,
+A love once vibrant, now so still.
+
+I trace the steps we used to dance,
+But find no rhythm, no romance.
+The music stopped, the lights went low,
+And left me standing in the throes.
+
+I reach for you, but you're not there,
+Just empty space and vacant air.
+The warmth we had has turned to chill,
+A love once vibrant, now so still.
+
+The flicker fades, the flame is gone,
+I'm left to face the breaking dawn.
+In quiet rooms where love once burned,
+I mourn the lessons never learned.`
+            },
+            "the-unseen": {
+                title: "The Unseen",
+                album: "Single",
+                lyrics: `I set the table, dim the lights,
+Practiced words a hundred nights.
+Footsteps echo down the hall,
+Shadows dance along the wall.
+The doorbell rings, my hands turn cold,
+I wanted this—or so I'm told.
+A shiver slithers through my spine,
+They're here… but something isn't right.
+
+Faces smiling, eyes so wide,
+But I feel hollow deep inside.
+Why do voices scratch my skin?
+Why does terror creep within?
+I asked them here, I called them near
+Yet something else is waiting here…
+The unseen… the unseen…
+
+Laughter swirls, it drowns the air,
+I see their shapes but no one's there.
+Did I invite them? Was it me?
+Or did they come to set me free?
+
+The door stays shut, the windows weep,
+My pulse is loud, my breath is weak.
+They talk, they eat, they sip their tea,
+Yet all their eyes are locked on me.
+
+Faces smiling, eyes so wide,
+But I feel hollow deep inside.
+Why do voices scratch my skin?
+Why does terror creep within?
+I asked them here, I called them near
+Yet something else is waiting here…
+The unseen… the unseen…
+
+The clock hands twitch, the walls collapse,
+The candle flickers, whispers scratch.
+I scream, I run, I claw the door
+But I don't live here anymore.
+
+They came for dinner… I fade away…
+Now I'm the unseen… and they will stay.
+
+Faces smiling, eyes so wide,
+But I feel hollow deep inside.
+Why do voices scratch my skin?
+Why does terror creep within?
+I asked them here, I called them near
+Yet something else is waiting here…
+The unseen… the unseen…`
+            },
+            "whispers-of-a-heart": {
+                title: "Whispers Of A Heart",
+                album: "Single",
+                lyrics: `We've been laughing, we've been talking,
+Side by side but never crossing,
+Something in the way you look at me feels new.
+Late night echoes in my mind,
+The things you say, the way you shine,
+I wonder if you feel it too.
+
+I don't wanna rush, don't wanna fall too fast,
+But every moment's pulling me closer,
+I don't know if you see it yet,
+But i'm right here if you see it yet,
+
+And maybe it's just me, maybe it's a sign,
+The way your words stay tangled up in mine.
+We're dancing on a line we've never walked before,
+A little closer, just a little more.
+Whispers Of A Heart
+
+You pick me first, you stay behind,
+Choosing me instead of time
+And I can't help but wonder what it means.
+We joke, we laugh, we stand so near
+But every laugh it feels so clear
+Like maybe there's more underneath.
+
+If i say it out loud, will it change the way you see me?
+Or are we already somewhere in between?
+
+And maybe it's just me, maybe it's a sign,
+The way your words stay tangled up in mine.
+We're dancing on a line we've never walked before,
+A little closer, just a little more.
+Whispers Of A Heart
+
+So I'll wait here in the space between,
+Hoping that you're looking back at me.
+Whispers Of A Heart
+
+And maybe it's just me, maybe it's a sign,
+The way your words stay tangled up in mine.
+We're dancing on a line we've never walked before,
+A little closer, just a little more.
+Whispers Of A Heart
+
+It's just a whisper of a heart
+Maybe something more, i'm not sure
+It's just a whisper of a heart
+Maybe something more, i'm not sure`
+            },
+            "the-lighthouse-doesnt-turn": {
+                title: "The Lighthouse Doesn't Turn",
+                album: "Single",
+                lyrics: `The tide rolls in, but you don't wait,
+Your footprints vanish at the gate.
+The lantern's glow has lost its hue,
+I search the shore, but not for you.
+
+The lighthouse doesn't turn tonight,
+Its beam once warm, now void of light.
+I call your name into the breeze,
+But echoes drown beneath the seas.
+
+The compass spins without a north,
+A ship adrift, I venture forth.
+Your silence, like a siren's song,
+Leads me to where I don't belong.
+
+The lighthouse doesn't turn tonight,
+Its beam once warm, now void of light.
+I call your name into the breeze,
+But echoes drown beneath the seas.
+
+In dreams, I sail to distant lands,
+Clutching maps with trembling hands.
+But every path and every chart,
+Leads back to where we fell apart.
+
+The lighthouse doesn't turn tonight,
+Its beam once warm, now void of light.
+I call your name into the breeze,
+But echoes drown beneath the seas.
+
+The stars above refuse to shine,
+Reflecting this heartache of mine.
+Adrift alone, I slowly learn,
+The lighthouse doesn't turn.
+
+The lighthouse doesn't turn tonight,
+Its beam once warm, now void of light.
+I call your name into the breeze,
+But echoes drown beneath the seas`
+            },
             "false-lies": {
                 title: "False Lies",
                 album: "Auburn",
@@ -693,7 +884,7 @@ Still runs back to you
 We were almost perfect, almost finally right
 But the "almost" always turned into another night
 Where we talked in circles, never really heard
-Holding back the truth, swallowing every single word
+Holding back the truth, swallowing every Single word
 
 How did comfort turn to walking on a wire?
 How did all that warmth turn into quiet fire?
